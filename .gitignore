@@ -68,5 +68,9 @@ modules.xml
 .idea/misc.xml
 *.ipr
 
+### Java-Web ###
+## ignoring target file
+target/
+
 
 # End of https://www.gitignore.io/api/intellij+all
