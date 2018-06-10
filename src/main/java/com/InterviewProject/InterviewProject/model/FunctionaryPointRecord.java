@@ -10,6 +10,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -35,6 +36,12 @@ public class FunctionaryPointRecord {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate datePoint;
 
+    @Column(name = "hour_point")
+    @Type(type = HibernateTypes.JODA_LOCAL_TIME)
+    @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    private LocalTime hourPoint;
+
     public Long getId() {
         return id;
     }
@@ -57,6 +64,14 @@ public class FunctionaryPointRecord {
 
     public void setDatePoint(LocalDate datePoint) {
         this.datePoint = datePoint;
+    }
+
+    public LocalTime getHourPoint() {
+        return hourPoint;
+    }
+
+    public void setHourPoint(LocalTime hourPoint) {
+        this.hourPoint = hourPoint;
     }
 
     @Override
