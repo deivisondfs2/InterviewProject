@@ -1,7 +1,11 @@
 package com.InterviewProject.InterviewProject.model;
 
 import com.InterviewProject.InterviewProject.infra.HibernateTypes;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Type;
@@ -22,11 +26,60 @@ public class FunctionaryPointRecord {
     @JoinColumn(name = "functionary_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
+    @JsonManagedReference
     private Functionary functionary;
 
     @Column(name = "date_point")
     @Type(type = HibernateTypes.JODA_LOCAL_DATE)
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate datePoint;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Functionary getFunctionary() {
+        return functionary;
+    }
+
+    public void setFunctionary(Functionary functionary) {
+        this.functionary = functionary;
+    }
+
+    public LocalDate getDatePoint() {
+        return datePoint;
+    }
+
+    public void setDatePoint(LocalDate datePoint) {
+        this.datePoint = datePoint;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FunctionaryPointRecord that = (FunctionaryPointRecord) o;
+
+        return new EqualsBuilder()
+                .append(id, that.id)
+                .append(functionary, that.functionary)
+                .append(datePoint, that.datePoint)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(functionary)
+                .append(datePoint)
+                .toHashCode();
+    }
 }
